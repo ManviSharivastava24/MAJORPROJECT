@@ -19,6 +19,10 @@ const localStrategy=require("passport-local");
 const passportLocalMongoose = require("passport-local-mongoose"); 
 const User=require("./models/user.js");
 
+app.get("/", (req, res) => {
+    res.redirect("/listings"); 
+});
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static('public'));
@@ -64,8 +68,8 @@ app.use((req,res,next)=>{
 });
 
 main()
-    .then(() => {
-        console.log("connectd to db");
+.then(() => {
+    console.log("connectd to db");
     })
     .catch((err) => {
         console.log(err);
@@ -87,10 +91,6 @@ app.use((err, req, res, next) => {
     let { statusCode = 500, message = "something went wrong" } = err;
     res.status(statusCode).render("error.ejs", { message });
     // res.status(statusCode).send(message);
-});
-
-app.get("/", (req, res) => {
-    res.redirect("/listings"); 
 });
 
 app.listen(8080, () => {
